@@ -1,8 +1,6 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
-#include <Printer.cpp>
 #include <dataRelay.cpp>
-#include <motorControl.cpp>
 
 #define PIN_FRONT 2
 #define PIN_LEFT 4
@@ -75,7 +73,7 @@ void loop(){
   }
   else if(Serial.available() > 0){
     String data = Serial.readString();
-    print.out(data);
+    //print.out(data);
 
     if(data == "debug"){
       dr.formatData(3);
@@ -91,7 +89,7 @@ void loop(){
 
     int power = front + left + right;
 
-    if(dr.debug){
+    if(dr.debug && power != 0){
       print.out((String)power);
     }
     

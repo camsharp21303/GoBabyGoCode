@@ -1,4 +1,4 @@
-#include <motor.cpp>
+#include <motorControl.cpp>
 #include <Printer.cpp>
 
 #define motor1Relay1 8
