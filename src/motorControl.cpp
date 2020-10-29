@@ -1,6 +1,6 @@
 #include "motorControl.h"
 
-motorControl::motorControl(motor* m1, motor* m2, int power=105){
+motorControl::motorControl(motor* m1, motor* m2, int power){
     _m1 = m1;
     _m2 = m2;
     p=power;
