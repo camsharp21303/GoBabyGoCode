@@ -1,21 +1,19 @@
-#include <Arduino.h>
-#include <SoftwareSerial.h>
+#include "Printer.h"
 
-class Printer {
-    private:
-        HardwareSerial* _ser;
-        SoftwareSerial* _hc;
-    public:
-        Printer(HardwareSerial* hwSer, SoftwareSerial* swSer){
-            _ser = hwSer;
-            _hc = swSer;
-        }
-        void out(int m){
-            _ser->println(m);
-            _hc->println(m);
-        }
-        void out(String m){
-            _ser->println(m);
-            _hc->println(m);
-        }
-};
+Printer::Printer(HardwareSerial* hwSer, SoftwareSerial* swSer){
+    _ser = hwSer;
+    _hc = swSer;
+}
+void Printer::out(int m){
+    _ser->println(m);
+    _hc->println(m);
+}
+void Printer::out(String m){
+    _ser->println(m);
+    _hc->println(m);
+}
+
+void Printer::begin(int baud){
+    _ser->begin(baud);
+    _hc->begin(baud);
+}

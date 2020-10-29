@@ -1,11 +1,3 @@
-#include <Arduino.h>
-#include <SoftwareSerial.h>
-#include <dataRelay.cpp>
-
-#define PIN_FRONT 2
-#define PIN_LEFT 4
-#define PIN_RIGHT 7
-
 /*******************************************
  * Created by Cameron Sharp from team 10523, the Dragons
  *  
@@ -29,6 +21,11 @@
  *  131-191: forward right motor
  *  193-253: reverse right motor
  *******************************************/
+#include "SoftwareSerial.h"
+#include "Arduino.h"
+#include "Printer.h"
+#include "motorControl.h"
+#include "dataRelay.h"
 
 unsigned int timer;
 int timerReset;
@@ -37,28 +34,21 @@ boolean buttonControl = false;
 boolean dir8 = false;
 boolean dir11 = false;
 
-SoftwareSerial bt(6, 5);
+SoftwareSerial bt(hcRXPin, hcTXPin);
 Printer print(&Serial, &bt);
 dataRelay dr(&print);
 motorControl mc(&dr.m1, &dr.m2);
+void setUpPins();
 
 void setup(){
-  Serial.begin(9600);
-  bt.begin(9600);
+  print.begin();
+  
+  setUpPins();
 
-  pinMode(3, OUTPUT);
-
-  for(int i = 8; i < 14; i++){
-    pinMode(i, OUTPUT);
-  }
-
-  pinMode(PIN_FRONT, INPUT);
-  pinMode(PIN_LEFT, INPUT);
-  pinMode(PIN_RIGHT, INPUT);
   timerReset = millis();
 
   delay(1000);
-  digitalWrite(13, HIGH);
+  digitalWrite(debugLED, HIGH);
   print.out("System Ready");
 }
 
@@ -73,10 +63,9 @@ void loop(){
   }
   else if(Serial.available() > 0){
     String data = Serial.readString();
-    //print.out(data);
 
     if(data == "debug"){
-      dr.formatData(3);
+      dr.formatData(debugNumber);
     }
   }
   else if(timer > 500){
@@ -108,7 +97,17 @@ void loop(){
         mc.stop();
         break;
     }
-
   }
 }
+
+
+void setUpPins(){
+    pinMode(motor1Relay1, OUTPUT);
+    pinMode(motor1Relay2, OUTPUT);
+    pinMode(motor1Speed, OUTPUT);
+    pinMode(motor2Relay1, OUTPUT);
+    pinMode(motor1Relay2, OUTPUT);
+    pinMode(motor2Speed, OUTPUT);
+    pinMode(debugLED, OUTPUT);
+};
 
