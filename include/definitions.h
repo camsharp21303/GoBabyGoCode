@@ -2,8 +2,8 @@
 #define motor1Relay2 9
 #define motor1Speed 3
 
-#define motor2Relay1 11
-#define motor2Relay2 12
+#define motor2Relay1 12
+#define motor2Relay2 11
 #define motor2Speed 10
 
 #define hcRXPin 6

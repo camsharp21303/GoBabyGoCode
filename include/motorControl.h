@@ -10,7 +10,7 @@ class motorControl{
         motor* _m2;
         int p;
     public:
-        motorControl(motor* m1, motor* m2, int power=105);
+        motorControl(motor* m1, motor* m2, int power=85);
         void stop();
         void moveMotors(Direction dir);      
 };

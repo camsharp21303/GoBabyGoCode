@@ -53,6 +53,7 @@ void setup(){
 }
 
 void loop(){
+  delay(2);
   timer = millis() - timerReset;
 
   if(bt.available()){
@@ -106,7 +107,7 @@ void setUpPins(){
     pinMode(motor1Relay2, OUTPUT);
     pinMode(motor1Speed, OUTPUT);
     pinMode(motor2Relay1, OUTPUT);
-    pinMode(motor1Relay2, OUTPUT);
+    pinMode(motor2Relay2, OUTPUT);
     pinMode(motor2Speed, OUTPUT);
     pinMode(debugLED, OUTPUT);
 };

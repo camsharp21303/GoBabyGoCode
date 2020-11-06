@@ -14,20 +14,20 @@ void motorControl::moveMotors(Direction dir){
     switch (dir)
     {
     case FORWARD:
-        _m1->setPower(true, p);
-        _m2->setPower(true, p);
+        _m1->setPower(false, p);
+        _m2->setPower(false, p);
         break;
     case BACKWARD:
-        _m1->setPower(false, p);
-        _m2->setPower(false, p);
+        _m1->setPower(true, p);
+        _m2->setPower(true, p);
         break;
     case LEFT:
-        _m1->setPower(true, p);
-        _m2->setPower(false, p);
-        break;
-    case RIGHT:
         _m1->setPower(false, p);
         _m2->setPower(true, p);
+        break;
+    case RIGHT:
+        _m1->setPower(true, p);
+        _m2->setPower(false, p);
         break;
     }
 }

@@ -35,6 +35,9 @@ void dataRelay::formatData(int d){
         }
         break;
     default:
+        if(debug){
+            print->out(d);
+        }
         if(d >= 11 && d <= 71){
             m1.setPower(true, (d-10)*4);
         }
