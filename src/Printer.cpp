@@ -5,12 +5,18 @@ Printer::Printer(HardwareSerial* hwSer, SoftwareSerial* swSer){
     _hc = swSer;
 }
 void Printer::out(int m){
-    _ser->println(m);
-    _hc->println(m);
+    _ser->print(m);
+    _hc->print(m);
 }
+
+void Printer::out(char m){
+    _ser->print(m);
+    _hc->print(m);
+}
+
 void Printer::out(String m){
-    _ser->println(m);
-    _hc->println(m);
+    _ser->print(m);
+    _hc->print(m);
 }
 
 void Printer::begin(int baud){

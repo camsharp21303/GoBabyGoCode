@@ -15,19 +15,21 @@
  *  0 : stops left motor
  *  1 : stops right motor
  *  
- *  6-67 : reverse left motor
- *  68-129 : forward left motor
+ *  11-71 : reverse left motor
+ *  72-132 : forward left motor
  *  
- *  131-191: forward right motor
- *  193-253: reverse right motor
+ *  133-193: forward right motor
+ *  194-254: reverse right motor
  *******************************************/
 #include "SoftwareSerial.h"
 #include "Arduino.h"
 #include "Printer.h"
 #include "motorControl.h"
 #include "dataRelay.h"
+#include "EEPROM.h"
 
 unsigned int timer;
+unsigned char buttonPower = 85;
 int timerReset;
 boolean buttonControl = false;
 
@@ -42,14 +44,14 @@ void setUpPins();
 
 void setup(){
   print.begin();
-  
   setUpPins();
-
   timerReset = millis();
+  buttonPower = EEPROM.read(0);
+  print.out(buttonPower);
 
   delay(1000);
   digitalWrite(debugLED, HIGH);
-  print.out("System Ready");
+  Serial.println("System Ready");
 }
 
 void loop(){
@@ -60,13 +62,32 @@ void loop(){
     buttonControl = false;
     timerReset = millis();
     int data = bt.read();
-    dr.formatData(data);
+  
+    if(data == 4){
+      while(!bt.available());
+      buttonPower = bt.read();
+      EEPROM.write(0, buttonPower);
+      print.out("\n");
+      print.out(buttonPower);
+    }
+    else if(data == 5){
+      print.out((char)buttonPower);
+    }
+    else{
+      dr.formatData(data);
+    }
   }
   else if(Serial.available() > 0){
     String data = Serial.readString();
 
     if(data == "debug"){
       dr.formatData(debugNumber);
+    }
+    else if(data == "4"){
+      delay(1000);
+      buttonPower = Serial.read();
+      EEPROM.write(0, buttonPower);
+      print.out(buttonPower);
     }
   }
   else if(timer > 500){
@@ -86,13 +107,13 @@ void loop(){
     switch (power)
     {
       case 1:
-        mc.moveMotors(FORWARD);
+        mc.moveMotors(FORWARD, buttonPower);
         break;
       case 2:
-        mc.moveMotors(LEFT);
+        mc.moveMotors(LEFT, buttonPower);
         break;
       case 4:
-        mc.moveMotors(RIGHT);
+        mc.moveMotors(RIGHT, buttonPower);
         break;
       default:
         mc.stop();

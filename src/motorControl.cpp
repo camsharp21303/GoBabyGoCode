@@ -1,16 +1,15 @@
 #include "motorControl.h"
 
-motorControl::motorControl(motor* m1, motor* m2, int power){
+motorControl::motorControl(motor* m1, motor* m2){
     _m1 = m1;
     _m2 = m2;
-    p=power;
 }
 void motorControl::stop(){
     _m1->stop();
     _m2->stop();
 }
 
-void motorControl::moveMotors(Direction dir){
+void motorControl::moveMotors(Direction dir, int p){
     switch (dir)
     {
     case FORWARD:

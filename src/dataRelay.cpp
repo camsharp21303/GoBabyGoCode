@@ -1,6 +1,5 @@
 #include "dataRelay.h"
 
-
 void dataRelay::blink(){
     for(int i = 0; i < 3; i++){
         digitalWrite(debugLED, LOW);
@@ -26,17 +25,17 @@ void dataRelay::formatData(int d){
         if(debug){
             debug = false;
             blink();
-            print->out("Debugging is off");
+            print->out("Debugging is off\n");
         }
         else{
             debug  = true;
             blink();
-            print->out("Debugging is on");
+            print->out("Debugging is on\n");
         }
         break;
     default:
         if(debug){
-            print->out(d);
+            print->out(d+"\n");
         }
         if(d >= 11 && d <= 71){
             m1.setPower(true, (d-10)*4);

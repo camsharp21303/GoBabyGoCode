@@ -13,6 +13,7 @@ class Printer {
         void begin(int baud=9600);
         void out(int m);
         void out(String m);
+        void out (char m);
 };
 
 #endif

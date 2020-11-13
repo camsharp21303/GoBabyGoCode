@@ -8,11 +8,10 @@ class motorControl{
     private:
         motor* _m1;
         motor* _m2;
-        int p;
     public:
-        motorControl(motor* m1, motor* m2, int power=85);
+        motorControl(motor* m1, motor* m2);
         void stop();
-        void moveMotors(Direction dir);      
+        void moveMotors(Direction dir, int p=85);      
 };
 
 
