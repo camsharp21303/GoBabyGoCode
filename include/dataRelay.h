@@ -9,6 +9,7 @@ class dataRelay{
     private:
         Printer* print;
         void blink();
+        const int POWER_MULTIPLY = 1;
     public:
         motor m1 = motor(motor1Relay1, motor1Relay2, motor1Speed);
         motor m2 = motor(motor2Relay1, motor2Relay2, motor2Speed);
