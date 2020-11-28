@@ -51,6 +51,9 @@ void setup(){
 
   delay(1000);
   digitalWrite(debugLED, HIGH);
+
+  setupTrim(EEPROM.read(1));
+
   Serial.println("System Ready");
 }
 
@@ -72,6 +75,13 @@ void loop(){
     }
     else if(data == 5){
       print.out((char)buttonPower);
+      print.out((char)EEPROM.read(1));
+    }
+    else if(data == 6){
+      while(!bt.available());
+      int newTRIM = bt.read();
+      setupTrim(newTRIM);
+      EEPROM.write(1, newTRIM);
     }
     else{
       dr.formatData(data);
@@ -122,6 +132,16 @@ void loop(){
   }
 }
 
+void setupTrim(int t){
+  if(t < 127){
+    dr.m2.setTRIM(t);
+    dr.m1.setTRIM(0);
+  }
+  else{
+    dr.m1.setTRIM(127-t);
+    dr.m2.setTRIM(0);
+  }
+}
 
 void setUpPins(){
     pinMode(motor1Relay1, OUTPUT);
